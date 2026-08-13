@@ -12,7 +12,8 @@ Source0:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/theanodidot.r%{t
 Source1:	https://mirrors.ctan.org/systems/texlive/tlnet/archive/theanodidot.doc.r%{tl_revision}.tar.xz
 BuildArch:	noarch
 BuildSystem:	texlive
-Provides:	texlive(%{tl_name}) = %{tl_revision}
+Requires:	texlive-tlpkg
+Provides:	texlive(%{tl_name}) = %{version}
 
 %description
 This package provides the TheanoDidot font designed by Alexey Kryukov,
@@ -30,3 +31,10 @@ the typeface designer. The strong clear forms of this alphabet display
 objective, rational characteristics and are representative of the time
 and philosophy of the Enlightenment.
 
+
+%install -a
+mkdir -p %{buildroot}%{_texmf_updmap_d}
+cat > %{buildroot}%{_texmf_updmap_d}/%{tl_name} <<'TL_DROPIN_EOF'
+# from theanodidot:
+Map TheanoDidot.map
+TL_DROPIN_EOF
